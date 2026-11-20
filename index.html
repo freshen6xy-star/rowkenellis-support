@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Independent support centre for Rowkenellis. Get help and send a support request.">
+  <title>Rowkenellis Support Centre</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Rowkenellis home">
+      <span class="brand-mark">r</span><span>rowkenellis<span class="dot">.</span>co</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#help">Help topics</a>
+      <a href="#request">Contact support</a>
+      <a href="#about">About</a>
+    </nav>
+    <a class="top-cta" href="#request">Get support <span>↗</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">☰</button>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> ROWKENELLIS HELP CENTRE</div>
+        <h1>How can we<br><span>help you today?</span></h1>
+        <p>Find answers, explore support topics, or send our team a message. We’re here to help you move forward.</p>
+        <a class="primary-btn" href="#request">Submit a support request <span>→</span></a>
+        <div class="hero-note"><span class="shield">✓</span> Independent support for Rowkenellis services</div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orb orb-one"></div><div class="orb orb-two"></div>
+        <div class="support-card">
+          <div class="card-top"><span class="tiny-logo">r</span><span class="online"><i></i> Support centre</span><span class="dots">•••</span></div>
+          <div class="chat-icon">✳</div>
+          <div class="card-title">We’re here to help.</div>
+          <div class="card-sub">Tell us what you need and we’ll guide you to the right place.</div>
+          <div class="fake-line wide"></div><div class="fake-line"></div>
+          <div class="fake-button">Start a request <b>→</b></div>
+        </div>
+        <div class="float-chip chip-a">✦ Helpful answers</div>
+        <div class="float-chip chip-b"><span class="green-dot"></span> Support made simple</div>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <div><strong>Clear guidance</strong><span>Easy-to-follow help</span></div>
+      <div><strong>One place</strong><span>Support topics in one hub</span></div>
+      <div><strong>Privacy first</strong><span>Only share what’s needed</span></div>
+    </section>
+
+    <section class="section" id="help">
+      <div class="section-heading">
+        <div><div class="eyebrow">EXPLORE SUPPORT</div><h2>What do you need help with?</h2></div>
+        <p>Choose a topic to see the right next step.</p>
+      </div>
+      <div class="topic-grid">
+        <a class="topic-card" href="#request"><span class="topic-icon blue">◈</span><h3>Account & access</h3><p>Help with signing in to Rowkenellis services and account settings.</p><span class="card-link">Get help <b>→</b></span></a>
+        <a class="topic-card" href="#request"><span class="topic-icon violet">▤</span><h3>Report a problem</h3><p>Tell us about a technical issue, error, or service problem.</p><span class="card-link">Make a report <b>→</b></span></a>
+        <a class="topic-card" href="#request"><span class="topic-icon orange">◎</span><h3>Safety & privacy</h3><p>Ask a question about privacy, safety, or content on this website.</p><span class="card-link">Contact support <b>→</b></span></a>
+        <a class="topic-card" href="#request"><span class="topic-icon green">?</span><h3>Other questions</h3><p>Can’t find the right topic? Send us a general enquiry.</p><span class="card-link">Ask a question <b>→</b></span></a>
+      </div>
+    </section>
+
+    <section class="request-section" id="request">
+      <div class="request-copy">
+        <div class="eyebrow">WE’RE LISTENING</div>
+        <h2>Still need a hand?</h2>
+        <p>Send a support request using the secure form below. Include a short description so the team can understand the issue.</p>
+        <div class="privacy-callout"><span>🔒</span><div><strong>Keep your information safe</strong><p>Never submit passwords, one-time codes, recovery codes, payment details, or identity documents through a support request.</p></div></div>
+      </div>
+      <div class="form-panel">
+        <div class="form-panel-head"><div><span class="status-dot"></span> SUPPORT REQUEST</div><span class="secure-label">Privacy-aware form</span></div>
+        <div id="formSetupNotice" class="setup-notice">
+          <div class="setup-icon">✉</div>
+          <h3>Connect your support form</h3>
+          <p>This portal is ready for your Google Form. Create a form, then paste its embed URL into <code>script.js</code> as explained in the README.</p>
+          <a href="https://forms.google.com/" target="_blank" rel="noopener">Create a Google Form ↗</a>
+        </div>
+        <iframe id="supportForm" title="Rowkenellis support request form" class="google-form" loading="lazy" hidden></iframe>
+        <p class="form-footnote">This is an independent Rowkenellis support website and is not affiliated with Instagram, Meta, or any other platform.</p>
+      </div>
+    </section>
+
+    <section class="faq-section" id="about">
+      <div class="eyebrow">GOOD TO KNOW</div><h2>Frequently asked questions</h2>
+      <details><summary>How do I send a support request?<span>＋</span></summary><p>Use the form in the Contact Support section. Describe the issue clearly and include only information needed to respond.</p></details>
+      <details><summary>Can support ask me for my password or OTP?<span>＋</span></summary><p>No. Never share passwords, one-time passcodes, recovery codes, or payment details with anyone claiming to provide support.</p></details>
+      <details><summary>Is this the official Instagram or Meta support portal?<span>＋</span></summary><p>No. Rowkenellis is an independent website and is not affiliated with or endorsed by Instagram or Meta.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="#home"><span class="brand-mark">r</span><span>rowkenellis<span class="dot">.</span>co</span></a>
+    <p>Independent support centre · © <span id="year"></span> Rowkenellis</p>
+    <a href="#home">Back to top ↑</a>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
