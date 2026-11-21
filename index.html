@@ -3,24 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Independent support centre for Rowkenellis. Get help and send a support request.">
+  <meta name="description" content="Independent support centre for Rowkenellis.">
   <title>Rowkenellis Support Centre</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    [hidden] { display:none !important; }
+    .auth-wrap { min-height:75vh; display:grid; place-items:center; padding:48px 18px; background:#f5f7fb; }
+    .auth-card { width:min(100%,460px); background:#fff; border:1px solid #e5e9f1; border-radius:20px; padding:30px; box-shadow:0 16px 45px rgba(24,39,75,.08); }
+    .auth-card h1 { margin:8px 0; font-size:clamp(26px,5vw,34px); }
+    .auth-card p { color:#647084; line-height:1.55; }
+    .auth-form { display:grid; gap:10px; margin-top:20px; }
+    .auth-form label,.support-form label { font-weight:650; margin-top:8px; }
+    .auth-form input,.support-form input,.support-form textarea { width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid #d8dce5; border-radius:10px; font:inherit; background:#fff; color:#172033; }
+    .auth-form button,.support-form button,.secondary-action { margin-top:12px; padding:13px 18px; border:0; border-radius:10px; background:#1769e0; color:#fff; font:inherit; font-weight:700; cursor:pointer; }
+    .auth-form button:disabled,.support-form button:disabled { opacity:.65; cursor:wait; }
+    .auth-links { display:flex; flex-wrap:wrap; gap:14px; margin-top:18px; }
+    .auth-links button { border:0; padding:0; background:none; color:#1769e0; font:inherit; cursor:pointer; text-decoration:underline; }
+    #authMessage,#formMessage { min-height:1.4em; margin:8px 0 0; color:#334155; }
+    .account-bar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:14px 20px; background:#eef4ff; border-radius:12px; margin:20px 0; }
+    .account-bar button { padding:9px 14px; border:1px solid #c8d8f4; border-radius:9px; background:white; cursor:pointer; }
     .support-form { display:grid; gap:10px; }
-    .support-form label { font-weight:600; margin-top:8px; }
-    .support-form input, .support-form textarea {
-      width:100%; box-sizing:border-box; padding:13px 14px;
-      border:1px solid #d8dce5; border-radius:10px; font:inherit;
-      background:#fff; color:#172033;
-    }
     .support-form textarea { resize:vertical; }
-    .support-form button {
-      margin-top:12px; padding:14px 18px; border:0; border-radius:10px;
-      background:#1769e0; color:#fff; font:inherit; font-weight:700; cursor:pointer;
-    }
-    .support-form button:disabled { opacity:.65; cursor:wait; }
-    #formMessage { min-height:1.4em; margin:6px 0 0; }
+    .ticket-list { display:grid; gap:12px; margin-top:20px; }
+    .ticket-item { padding:15px; border:1px solid #e2e8f0; border-radius:12px; background:white; }
+    .ticket-item strong { display:block; margin-bottom:6px; }
+    .ticket-meta { color:#647084; font-size:.9rem; }
+    .auth-kicker { color:#1769e0; font-size:.78rem; font-weight:800; letter-spacing:.12em; }
+    .dashboard-heading { margin-top:30px; }
   </style>
 </head>
 <body>
@@ -37,87 +46,120 @@
     <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">☰</button>
   </header>
 
-  <main id="home">
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="pulse"></span> ROWKENELLIS HELP CENTRE</div>
-        <h1>How can we<br><span>help you today?</span></h1>
-        <p>Find answers, explore support topics, or send our team a message. We’re here to help you move forward.</p>
-        <a class="primary-btn" href="#request">Submit a support request <span>→</span></a>
-        <div class="hero-note"><span class="shield">✓</span> Independent support for Rowkenellis services</div>
+  <section class="auth-wrap" id="authScreen">
+    <div class="auth-card">
+      <div class="auth-kicker">ROWKENELLIS SUPPORT</div>
+      <h1 id="authTitle">Welcome back</h1>
+      <p id="authDescription">Log in to view your support dashboard and manage your requests.</p>
+      <form id="authForm" class="auth-form">
+        <label for="authEmail">Email address</label>
+        <input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required maxlength="254">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" placeholder="Enter your password" required minlength="8">
+        <button id="authSubmit" type="submit">Log in</button>
+      </form>
+      <p id="authMessage" role="status" aria-live="polite"></p>
+      <div class="auth-links">
+        <button type="button" id="showSignup">Create an account</button>
+        <button type="button" id="showLogin" hidden>Back to login</button>
+        <button type="button" id="forgotPassword">Forgot password?</button>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="orb orb-one"></div><div class="orb orb-two"></div>
-        <div class="support-card">
-          <div class="card-top"><span class="tiny-logo">r</span><span class="online"><i></i> Support centre</span><span class="dots">•••</span></div>
-          <div class="chat-icon">✳</div>
-          <div class="card-title">We’re here to help.</div>
-          <div class="card-sub">Tell us what you need and we’ll guide you to the right place.</div>
-          <div class="fake-line wide"></div><div class="fake-line"></div>
-          <div class="fake-button">Start a request <b>→</b></div>
+      <p class="form-footnote">Independent Rowkenellis support website. Never share passwords, OTPs, recovery codes, or payment details with support.</p>
+    </div>
+  </section>
+
+  <div id="appContent" hidden>
+    <main id="home">
+      <section class="section">
+        <div class="account-bar">
+          <div>Signed in as <strong id="signedInEmail"></strong></div>
+          <button id="logoutButton" type="button">Log out</button>
         </div>
-        <div class="float-chip chip-a">✦ Helpful answers</div>
-        <div class="float-chip chip-b"><span class="green-dot"></span> Support made simple</div>
-      </div>
-    </section>
+        <div class="eyebrow">YOUR DASHBOARD</div>
+        <h1 class="dashboard-heading">Your support requests</h1>
+        <p>Submit a new request and check the latest status of requests linked to your account.</p>
+        <div id="ticketList" class="ticket-list"><p>Loading your requests...</p></div>
+      </section>
 
-    <section class="trust-strip">
-      <div><strong>Clear guidance</strong><span>Easy-to-follow help</span></div>
-      <div><strong>One place</strong><span>Support topics in one hub</span></div>
-      <div><strong>Privacy first</strong><span>Only share what’s needed</span></div>
-    </section>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="pulse"></span> ROWKENELLIS HELP CENTRE</div>
+          <h1>How can we<br><span>help you today?</span></h1>
+          <p>Find answers, explore support topics, or send our team a message. We’re here to help you move forward.</p>
+          <a class="primary-btn" href="#request">Submit a support request <span>→</span></a>
+          <div class="hero-note"><span class="shield">✓</span> Independent support for Rowkenellis services</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orb orb-one"></div><div class="orb orb-two"></div>
+          <div class="support-card">
+            <div class="card-top"><span class="tiny-logo">r</span><span class="online"><i></i> Support centre</span><span class="dots">•••</span></div>
+            <div class="chat-icon">✳</div>
+            <div class="card-title">We’re here to help.</div>
+            <div class="card-sub">Tell us what you need and we’ll guide you to the right place.</div>
+            <div class="fake-line wide"></div><div class="fake-line"></div>
+            <div class="fake-button">Start a request <b>→</b></div>
+          </div>
+          <div class="float-chip chip-a">✦ Helpful answers</div>
+          <div class="float-chip chip-b"><span class="green-dot"></span> Support made simple</div>
+        </div>
+      </section>
 
-    <section class="section" id="help">
-      <div class="section-heading">
-        <div><div class="eyebrow">EXPLORE SUPPORT</div><h2>What do you need help with?</h2></div>
-        <p>Choose a topic to see the right next step.</p>
-      </div>
-      <div class="topic-grid">
-        <a class="topic-card" href="#request"><span class="topic-icon blue">◈</span><h3>Account & access</h3><p>Help with signing in to Rowkenellis services and account settings.</p><span class="card-link">Get help <b>→</b></span></a>
-        <a class="topic-card" href="#request"><span class="topic-icon violet">▤</span><h3>Report a problem</h3><p>Tell us about a technical issue, error, or service problem.</p><span class="card-link">Make a report <b>→</b></span></a>
-        <a class="topic-card" href="#request"><span class="topic-icon orange">◎</span><h3>Safety & privacy</h3><p>Ask a question about privacy, safety, or content on this website.</p><span class="card-link">Contact support <b>→</b></span></a>
-        <a class="topic-card" href="#request"><span class="topic-icon green">?</span><h3>Other questions</h3><p>Can’t find the right topic? Send us a general enquiry.</p><span class="card-link">Ask a question <b>→</b></span></a>
-      </div>
-    </section>
+      <section class="trust-strip">
+        <div><strong>Clear guidance</strong><span>Easy-to-follow help</span></div>
+        <div><strong>One place</strong><span>Support topics in one hub</span></div>
+        <div><strong>Privacy first</strong><span>Only share what’s needed</span></div>
+      </section>
 
-    <section class="request-section" id="request">
-      <div class="request-copy">
-        <div class="eyebrow">WE’RE LISTENING</div>
-        <h2>Still need a hand?</h2>
-        <p>Send a support request using the secure form below. Include a short description so the team can understand the issue.</p>
-        <div class="privacy-callout"><span>🔒</span><div><strong>Keep your information safe</strong><p>Never submit passwords, one-time codes, recovery codes, payment details, or identity documents through a support request.</p></div></div>
-      </div>
-      <div class="form-panel">
-        <div class="form-panel-head"><div><span class="status-dot"></span> SUPPORT REQUEST</div><span class="secure-label">Privacy-aware form</span></div>
-        <form id="supportForm" class="support-form">
-          <label for="contactEmail">Your email</label>
-          <input type="email" id="contactEmail" name="contactEmail" placeholder="you@example.com" maxlength="254" required>
-          <label for="subject">Subject</label>
-          <input type="text" id="subject" name="subject" placeholder="What do you need help with?" maxlength="120" required>
-          <label for="message">Describe your issue</label>
-          <textarea id="message" name="message" placeholder="Explain your issue here..." rows="5" maxlength="3000" required></textarea>
-          <button id="submitRequest" type="submit">Send support request</button>
-          <p id="formMessage" role="status" aria-live="polite"></p>
-        </form>
-        <p class="form-footnote">This is an independent Rowkenellis support website and is not affiliated with Instagram, Meta, or any other platform.</p>
-      </div>
-    </section>
+      <section class="section" id="help">
+        <div class="section-heading">
+          <div><div class="eyebrow">EXPLORE SUPPORT</div><h2>What do you need help with?</h2></div>
+          <p>Choose a topic to see the right next step.</p>
+        </div>
+        <div class="topic-grid">
+          <a class="topic-card" href="#request"><span class="topic-icon blue">◈</span><h3>Account & access</h3><p>Help with signing in to Rowkenellis services and account settings.</p><span class="card-link">Get help <b>→</b></span></a>
+          <a class="topic-card" href="#request"><span class="topic-icon violet">▤</span><h3>Report a problem</h3><p>Tell us about a technical issue, error, or service problem.</p><span class="card-link">Make a report <b>→</b></span></a>
+          <a class="topic-card" href="#request"><span class="topic-icon orange">◎</span><h3>Safety & privacy</h3><p>Ask a question about privacy, safety, or content on this website.</p><span class="card-link">Contact support <b>→</b></span></a>
+          <a class="topic-card" href="#request"><span class="topic-icon green">?</span><h3>Other questions</h3><p>Can’t find the right topic? Send us a general enquiry.</p><span class="card-link">Ask a question <b>→</b></span></a>
+        </div>
+      </section>
 
-    <section class="faq-section" id="about">
-      <div class="eyebrow">GOOD TO KNOW</div><h2>Frequently asked questions</h2>
-      <details><summary>How do I send a support request?<span>＋</span></summary><p>Use the form in the Contact Support section. Describe the issue clearly and include only information needed to respond.</p></details>
-      <details><summary>Can support ask me for my password or OTP?<span>＋</span></summary><p>No. Never share passwords, one-time passcodes, recovery codes, or payment details with anyone claiming to provide support.</p></details>
-      <details><summary>Is this the official Instagram or Meta support portal?<span>＋</span></summary><p>No. Rowkenellis is an independent website and is not affiliated with or endorsed by Instagram or Meta.</p></details>
-    </section>
-  </main>
+      <section class="request-section" id="request">
+        <div class="request-copy">
+          <div class="eyebrow">WE’RE LISTENING</div>
+          <h2>Still need a hand?</h2>
+          <p>Send a support request using the form below. Include a short description so the team can understand the issue.</p>
+          <div class="privacy-callout"><span>🔒</span><div><strong>Keep your information safe</strong><p>Never submit passwords, one-time codes, recovery codes, payment details, or identity documents through a support request.</p></div></div>
+        </div>
+        <div class="form-panel">
+          <div class="form-panel-head"><div><span class="status-dot"></span> SUPPORT REQUEST</div><span class="secure-label">Privacy-aware form</span></div>
+          <form id="supportForm" class="support-form">
+            <label for="contactEmail">Your email</label>
+            <input type="email" id="contactEmail" name="contactEmail" required maxlength="254">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="What do you need help with?" maxlength="120" required>
+            <label for="message">Describe your issue</label>
+            <textarea id="message" name="message" placeholder="Explain your issue here..." rows="5" maxlength="3000" required></textarea>
+            <button id="submitRequest" type="submit">Send support request</button>
+            <p id="formMessage" role="status" aria-live="polite"></p>
+          </form>
+          <p class="form-footnote">This is an independent Rowkenellis support website and is not affiliated with Instagram, Meta, or any other platform.</p>
+        </div>
+      </section>
 
-  <footer>
-    <a class="brand footer-brand" href="#home"><span class="brand-mark">r</span><span>rowkenellis<span class="dot">.</span>co</span></a>
-    <p>Independent support centre · © <span id="year"></span> Rowkenellis</p>
-    <a href="#home">Back to top ↑</a>
-  </footer>
+      <section class="faq-section" id="about">
+        <div class="eyebrow">GOOD TO KNOW</div><h2>Frequently asked questions</h2>
+        <details><summary>How do I send a support request?<span>＋</span></summary><p>Use the form in the Contact Support section. Describe the issue clearly and include only information needed to respond.</p></details>
+        <details><summary>Can support ask me for my password or OTP?<span>＋</span></summary><p>No. Never share passwords, one-time passcodes, recovery codes, or payment details with anyone claiming to provide support.</p></details>
+        <details><summary>Is this the official Instagram or Meta support portal?<span>＋</span></summary><p>No. Rowkenellis is an independent website and is not affiliated with or endorsed by Instagram or Meta.</p></details>
+      </section>
+    </main>
+    <footer>
+      <a class="brand footer-brand" href="#home"><span class="brand-mark">r</span><span>rowkenellis<span class="dot">.</span>co</span></a>
+      <p>Independent support centre · © <span id="year"></span> Rowkenellis</p>
+      <a href="#home">Back to top ↑</a>
+    </footer>
+  </div>
 
-  <!-- Supabase browser library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
 </body>
