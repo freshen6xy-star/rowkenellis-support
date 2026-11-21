@@ -6,6 +6,22 @@
   <meta name="description" content="Independent support centre for Rowkenellis. Get help and send a support request.">
   <title>Rowkenellis Support Centre</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .support-form { display:grid; gap:10px; }
+    .support-form label { font-weight:600; margin-top:8px; }
+    .support-form input, .support-form textarea {
+      width:100%; box-sizing:border-box; padding:13px 14px;
+      border:1px solid #d8dce5; border-radius:10px; font:inherit;
+      background:#fff; color:#172033;
+    }
+    .support-form textarea { resize:vertical; }
+    .support-form button {
+      margin-top:12px; padding:14px 18px; border:0; border-radius:10px;
+      background:#1769e0; color:#fff; font:inherit; font-weight:700; cursor:pointer;
+    }
+    .support-form button:disabled { opacity:.65; cursor:wait; }
+    #formMessage { min-height:1.4em; margin:6px 0 0; }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -73,13 +89,16 @@
       </div>
       <div class="form-panel">
         <div class="form-panel-head"><div><span class="status-dot"></span> SUPPORT REQUEST</div><span class="secure-label">Privacy-aware form</span></div>
-        <div id="formSetupNotice" class="setup-notice">
-          <div class="setup-icon">✉</div>
-          <h3>Connect your support form</h3>
-          <p>This portal is ready for your Google Form. Create a form, then paste its embed URL into <code>script.js</code> as explained in the README.</p>
-          <a href="https://forms.google.com/" target="_blank" rel="noopener">Create a Google Form ↗</a>
-        </div>
-        <iframe id="supportForm" title="Rowkenellis support request form" class="google-form" loading="lazy" hidden></iframe>
+        <form id="supportForm" class="support-form">
+          <label for="contactEmail">Your email</label>
+          <input type="email" id="contactEmail" name="contactEmail" placeholder="you@example.com" maxlength="254" required>
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="What do you need help with?" maxlength="120" required>
+          <label for="message">Describe your issue</label>
+          <textarea id="message" name="message" placeholder="Explain your issue here..." rows="5" maxlength="3000" required></textarea>
+          <button id="submitRequest" type="submit">Send support request</button>
+          <p id="formMessage" role="status" aria-live="polite"></p>
+        </form>
         <p class="form-footnote">This is an independent Rowkenellis support website and is not affiliated with Instagram, Meta, or any other platform.</p>
       </div>
     </section>
@@ -97,6 +116,9 @@
     <p>Independent support centre · © <span id="year"></span> Rowkenellis</p>
     <a href="#home">Back to top ↑</a>
   </footer>
+
+  <!-- Supabase browser library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
 </body>
 </html>
